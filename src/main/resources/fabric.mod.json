@@ -1,15 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "doug",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "Doug Client",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "Accusitive",
+    "Doug"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
+    "homepage": "doug@neb.best",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
 
