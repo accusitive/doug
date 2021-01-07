@@ -8,8 +8,8 @@
   "client": [
     "ExampleMixin",
     "ExampleMixin2",
-    "KeyPressMixin"
-
+    "KeyPressMixin",
+    "HudRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -2,6 +2,8 @@ package net.fabricmc.example;
 
 import java.util.HashMap;
 
+import net.minecraft.client.util.math.MatrixStack;
+
 public class Utility {
     String name;
     int bind;
@@ -55,4 +57,7 @@ public class Utility {
         }
 
     }
+
+	public void render(MatrixStack matrices, float tickDelta) {
+	}
 }

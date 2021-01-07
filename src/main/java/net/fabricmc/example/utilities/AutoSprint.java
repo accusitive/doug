@@ -8,7 +8,6 @@ import net.fabricmc.example.Utility;
 public class AutoSprint extends Utility {
     public AutoSprint() {
         super("Sprint", GLFW.GLFW_KEY_P);
-        
     }
     @Override
     public void init() {

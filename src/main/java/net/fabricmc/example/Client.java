@@ -3,6 +3,9 @@ package net.fabricmc.example;
 import java.util.HashMap;
 
 import net.fabricmc.example.utilities.AutoSprint;
+import net.fabricmc.example.utilities.Hud;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class Client {
     String name;
@@ -12,7 +15,8 @@ public class Client {
     public void init() {
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
-
+        this.utilities.put("hud", new Hud());
+        
         for (Utility u : this.utilities.values()) {
             u.init();
         }
@@ -27,5 +31,15 @@ public class Client {
                 }
             }
         }
+    }
+
+    public void render(MatrixStack matrices, float tickDelta) {
+        if (utilities != null) {
+            utilities.values().stream().filter(u -> u.state).forEach(u -> u.render(matrices, tickDelta));
+            // utilities.values().forEach(u -> u.render(matrices, tickDelta));
+        }
+    }
+    public HashMap<String, Utility> utilities() {
+        return this.utilities;
     }
 }
