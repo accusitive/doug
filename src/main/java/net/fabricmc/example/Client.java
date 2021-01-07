@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import net.fabricmc.example.utilities.AutoSprint;
 import net.fabricmc.example.utilities.Hud;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class Client {

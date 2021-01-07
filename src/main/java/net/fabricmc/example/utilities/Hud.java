@@ -1,6 +1,5 @@
 package net.fabricmc.example.utilities;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 
 import org.lwjgl.glfw.GLFW;
 
