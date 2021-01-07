@@ -1,11 +1,9 @@
 package net.fabricmc.example.utilities;
 
-import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.example.Utility;
-import net.fabricmc.example.Value;
 
 public class AutoSprint extends Utility {
     public AutoSprint() {

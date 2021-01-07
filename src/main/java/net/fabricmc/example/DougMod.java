@@ -10,6 +10,7 @@ public class DougMod implements ModInitializer {
 		// Proceed with mild caution.
 		
 		Client c = new Client();
+		c.init();
 
 		System.out.println("Hello Fabric world!");
 	}

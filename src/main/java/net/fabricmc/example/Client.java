@@ -12,8 +12,10 @@ public class Client {
     public Client() {
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
+    }
 
-        for(Utility u : this.utilities.values()) {
+    public void init() {
+        for (Utility u : this.utilities.values()) {
             u.init();
         }
     }

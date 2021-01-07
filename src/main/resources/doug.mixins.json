@@ -7,7 +7,8 @@
   ],
   "client": [
     "ExampleMixin",
-    "ExampleMixin2"
+    "ExampleMixin2",
+    "KeyPressMixin"
 
   ],
   "injectors": {

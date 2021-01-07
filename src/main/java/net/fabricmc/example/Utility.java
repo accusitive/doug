@@ -5,11 +5,14 @@ import java.util.HashMap;
 public class Utility {
     String name;
     int bind;
-    Boolean enabled;
+    Boolean state;
+    HashMap<String, Value<?>> settings;
 
     public Utility(String name, int bind) {
         this.name = name;
         this.bind = bind;
+        this.state = false;
+        this.settings = new HashMap<>();
     }
 
     public void init() {
@@ -24,8 +27,13 @@ public class Utility {
         return this.bind;
     }
 
+    public HashMap<String, Value<?>> getSettings() {
+        return this.settings;
+
+    }
+
     public Boolean enabled() {
-        return this.enabled;
+        return this.state;
     }
 
     public void onEnable() {
@@ -37,11 +45,11 @@ public class Utility {
     }
 
     public void toggle() {
-        if (this.enabled) {
-            this.enabled = false;
+        if (this.enabled()) {
+            this.state = false;
             this.onDisable();
         } else {
-            this.enabled = true;
+            this.state = true;
             this.onEnable();
         }
 
