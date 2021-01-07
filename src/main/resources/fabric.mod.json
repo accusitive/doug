@@ -20,11 +20,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.fabricmc.example.DougMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "doug.mixins.json"
   ],
 
   "depends": {
