@@ -59,5 +59,8 @@ public class Utility {
     }
 
 	public void render(MatrixStack matrices, float tickDelta) {
-	}
+    }
+    public void tick(){
+        
+    }
 }

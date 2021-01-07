@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "ExampleMixin",
-    "ExampleMixin2",
+    "TickMixin",
+    "TitleScreenMixin",
     "KeyPressMixin",
     "HudRenderMixin"
   ],

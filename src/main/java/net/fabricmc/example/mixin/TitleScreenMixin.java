@@ -1,16 +1,15 @@
-
 package net.fabricmc.example.mixin;
 
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.TitleScreen;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ClientPlayerEntity.class)
-public class ExampleMixin2 {
-	@Inject(at = @At("HEAD"), method= "tick()V")
-	public void tick(CallbackInfo info) {
+@Mixin(TitleScreen.class)
+public class TitleScreenMixin {
+	@Inject(at = @At("HEAD"), method = "init()V")
+	private void init(CallbackInfo info) {
 	}
 }

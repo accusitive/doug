@@ -23,7 +23,6 @@ public class Client {
     }
 
     public void keyPress(int key) {
-        System.out.print("press");
         if (utilities != null) {
             for (Utility u : this.utilities.values()) {
                 if (key == u.bind) {
@@ -36,10 +35,15 @@ public class Client {
     public void render(MatrixStack matrices, float tickDelta) {
         if (utilities != null) {
             utilities.values().stream().filter(u -> u.state).forEach(u -> u.render(matrices, tickDelta));
-            // utilities.values().forEach(u -> u.render(matrices, tickDelta));
         }
     }
     public HashMap<String, Utility> utilities() {
         return this.utilities;
+    }
+
+	public void tick() {
+        if (utilities != null) {
+            utilities.values().stream().filter(u -> u.state).forEach(u -> u. tick());
+        }
     }
 }
