@@ -8,7 +8,7 @@ import net.minecraft.client.MinecraftClient;
 
 public class AutoSprint extends Utility {
     public AutoSprint() {
-        super("Sprint", GLFW.GLFW_KEY_P);
+        super("Sprint", GLFW.GLFW_KEY_P, Category.Movement);
     }
     @Override
     public void tick() {

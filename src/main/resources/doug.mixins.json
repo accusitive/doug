@@ -9,7 +9,8 @@
     "TickMixin",
     "TitleScreenMixin",
     "KeyPressMixin",
-    "HudRenderMixin"
+    "HudRenderMixin",
+    "MousePressMixin"
   ],
   "injectors": {
     "defaultRequire": 1

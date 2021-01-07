@@ -2,6 +2,8 @@ package net.fabricmc.example;
 
 import java.util.HashMap;
 
+import org.lwjgl.glfw.GLFW;
+
 import net.minecraft.client.util.math.MatrixStack;
 
 public class Utility {
@@ -9,12 +11,16 @@ public class Utility {
     int bind;
     Boolean state;
     HashMap<String, Value<?>> settings;
-
-    public Utility(String name, int bind) {
+    Category category;
+    public enum Category {
+        Combat, Render, Movement, Player
+    }
+    public Utility(String name, int bind, Category category) {
         this.name = name;
         this.bind = bind;
         this.state = false;
         this.settings = new HashMap<>();
+        this.category = category;
     }
 
     public void init() {
@@ -61,6 +67,14 @@ public class Utility {
 	public void render(MatrixStack matrices, float tickDelta) {
     }
     public void tick(){
-        
+
     }
+    public String getName() {
+        return  String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 0), this.name());
+ 
+    }
+
+	public Category category() {
+		return this.category;
+	}
 }
