@@ -45,6 +45,7 @@ public class Utility {
     }
 
     public void toggle() {
+        System.out.printf("Module %s toggled.", this.name);
         if (this.enabled()) {
             this.state = false;
             this.onDisable();
