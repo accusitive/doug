@@ -10,7 +10,6 @@ public class Utility {
     String name;
     int bind;
     Boolean state;
-    HashMap<String, Value<?>> settings;
     Category category;
     public enum Category {
         Combat, Render, Movement, Player
@@ -19,7 +18,6 @@ public class Utility {
         this.name = name;
         this.bind = bind;
         this.state = false;
-        this.settings = new HashMap<>();
         this.category = category;
     }
 
@@ -35,8 +33,8 @@ public class Utility {
         return this.bind;
     }
 
-    public HashMap<String, Value<?>> getSettings() {
-        return this.settings;
+    public HashMap<String, Value> getSettings() {
+        return new HashMap<>();
 
     }
 

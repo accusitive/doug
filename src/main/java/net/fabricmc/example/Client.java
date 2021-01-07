@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import net.fabricmc.example.clickgui.ClickguiScreen;
 import net.fabricmc.example.clickgui.component.CategoryComponent;
+import net.fabricmc.example.utilities.Flight;
 import net.fabricmc.example.utilities.AutoSprint;
 import net.fabricmc.example.utilities.Clickgui;
 import net.fabricmc.example.utilities.Hud;
@@ -17,13 +18,20 @@ public class Client {
     String version;
     HashMap<String, Utility> utilities;
     ArrayList<CategoryComponent> categoryComponents;
-
+    ClickguiScreen clickguiScreen;
     public void init() {
         this.categoryComponents = new ArrayList<>();
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
+        // this.utilities.put("sprint2", new AutoSprint());
+        // this.utilities.put("sprint3", new AutoSprint());
+        // this.utilities.put("sprint4", new AutoSprint());
+        // this.utilities.put("sprint5", new AutoSprint());
+        // this.utilities.put("sprint6", new AutoSprint());
         this.utilities.put("hud", new Hud());
         this.utilities.put("click_gui", new Clickgui());
+        this.utilities.put("flight", new Flight());
+
         for (Utility u : this.utilities.values()) {
             u.init();
         }
@@ -70,5 +78,11 @@ public class Client {
             }
         }
         
-	}
+    }
+    public ClickguiScreen getClickguiScreen () {
+        return this.clickguiScreen;
+    }
+    public void setClickguiScreen (ClickguiScreen cgs) {
+        this.clickguiScreen = cgs;
+    }
 }

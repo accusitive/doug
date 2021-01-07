@@ -1,6 +1,6 @@
 package net.fabricmc.example;
 
-public class Setting<T> {
+public class Setting {
     String name;
-    Value<T> v;
+    Value v;
 }
