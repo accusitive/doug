@@ -63,7 +63,7 @@ public class CategoryComponent extends Component {
         DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height,
                 hovered(mouseX, mouseY) ? 0x8038a9ff : 0x80777777);
         MinecraftClient.getInstance().inGameHud.getFontRenderer().drawWithShadow(matrixStack, category.name(),
-                this.x + 4, this.y + 3, hovered(mouseX, mouseY) ? 0xFF0000 : -1);
+                this.x + 4, this.y + 3, -1);
 
         if (moduleComponents != null && this.open) {
             int y = height;
@@ -78,7 +78,6 @@ public class CategoryComponent extends Component {
     }
 
     public void mousePress(int button, int action) {
-        System.out.println("mouse press");
         if (this.hovered(this.mouseX, this.mouseY)) {
             if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && action == GLFW.GLFW_PRESS) {
                 this.open = !this.open;
@@ -95,21 +94,14 @@ public class CategoryComponent extends Component {
     }
 
     public ArrayList<Utility> getModsForCategory(Utility.Category c) {
-        System.out.println("getting mods for category");
         ArrayList<Utility> temp = new ArrayList<>();
         if (DougMod.client.utilities() == null) {
             return temp;
         }
         for (Utility u : DougMod.client.utilities().values()) {
-            System.out.println("Utility u in loop");
-            System.out.println(u);
-            System.out.println(c);
 
             if (u.category() == c) {
-                System.out.println("Category is c");
                 temp.add(u);
-            } else {
-                System.out.printf("Category %s is not %s\n", c, u.category());
             }
         }
         System.out.println(temp);

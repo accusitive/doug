@@ -85,4 +85,13 @@ public class Client {
     public void setClickguiScreen (ClickguiScreen cgs) {
         this.clickguiScreen = cgs;
     }
+    public static int panelColor() {
+        return 0x80000000;
+    }
+    public static int panelText() {
+        return -1;
+    }
+    public static int panelSelectedColor() {
+        return 0x80ffffff;
+    }
 }

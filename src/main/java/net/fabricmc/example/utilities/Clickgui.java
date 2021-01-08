@@ -20,6 +20,7 @@ public class Clickgui extends Utility {
             DougMod.client.setClickguiScreen(new ClickguiScreen());
         }
         mc.openScreen(DougMod.client.getClickguiScreen());
+        this.toggle();
         super.onEnable();
     }
 }

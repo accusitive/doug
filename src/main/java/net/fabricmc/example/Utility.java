@@ -35,7 +35,6 @@ public class Utility {
 
     public HashMap<String, Value> getSettings() {
         return new HashMap<>();
-
     }
 
     public Boolean enabled() {
