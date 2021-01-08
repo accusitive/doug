@@ -32,5 +32,8 @@ public class Component {
         this.width = width;
         this.height = height;
     }
+    public int height() {
+        return this.height;
+    }
 
 }

@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.fabricmc.example.value;
 
 public class Setting {
     String name;

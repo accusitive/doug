@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.fabricmc.example.BoolValue;
 import net.fabricmc.example.Utility;
-import net.fabricmc.example.Value;
+import net.fabricmc.example.value.BoolValue;
+import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
 
 public class AutoSprint extends Utility {

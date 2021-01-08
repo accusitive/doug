@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.example.Client;
 import net.fabricmc.example.Utility;
-import net.fabricmc.example.Value;
+import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.RenderLayer;
@@ -53,7 +53,7 @@ public class ModuleComponent extends Component {
         
         MinecraftClient mc = MinecraftClient.getInstance();
         
-        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height,
+        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
                 hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
         mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
                 utility.enabled() ? 0x8038a9ff : -1);
@@ -67,7 +67,7 @@ public class ModuleComponent extends Component {
                 oc.x = this.x + this.width;
                 oc.y = this.y + y;
                 oc.render(matrixStack, mouseX, mouseY);
-                y += oc.height;
+                y += oc.height();
             }
         }
         super.render(matrixStack, mouseX, mouseY);

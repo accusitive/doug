@@ -3,12 +3,11 @@ package net.fabricmc.example.utilities;
 import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
-
-import net.fabricmc.example.BoolValue;
-import net.fabricmc.example.ModeValue;
-import net.fabricmc.example.NumberValue;
 import net.fabricmc.example.Utility;
-import net.fabricmc.example.Value;
+import net.fabricmc.example.value.BoolValue;
+import net.fabricmc.example.value.ModeValue;
+import net.fabricmc.example.value.NumberValue;
+import net.fabricmc.example.value.Value;
 
 public class TestingUtil extends Utility {
     HashMap<String, Value> settings = new HashMap<>();

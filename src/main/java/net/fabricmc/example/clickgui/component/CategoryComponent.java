@@ -52,7 +52,7 @@ public class CategoryComponent extends Component {
         }
         String s = category.name();
         int w = mc.inGameHud.getFontRenderer().getWidth(s);
-        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height,
+        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
                 hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
         mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack,s,
                 this.x + (this.width - w) / 2, this.y + 3, -1);
@@ -63,7 +63,7 @@ public class CategoryComponent extends Component {
                 c.x = this.x;
                 c.y = this.y + y;
                 c.render(matrixStack, mouseX, mouseY);
-                y += c.height;
+                y += c.height();
             }
         }
         super.render(matrixStack, mouseX, mouseY);

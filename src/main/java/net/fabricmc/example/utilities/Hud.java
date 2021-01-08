@@ -39,9 +39,12 @@ public class Hud extends Utility {
         TextRenderer fr = mc.inGameHud.getFontRenderer();
         int width = mc.getWindow().getScaledWidth();
         int y = 0;
-
-        fr.drawWithShadow(matrices, "Doug Client", 1, 1, -1);
-        fr.drawWithShadow(matrices, String.format("FPS: %s", mc.fpsDebugString.split(" ")[0]), 1, 10, 0x00ff00);
+        // matrices.push();
+        matrices.scale(4, 4, 4);
+        fr.draw(matrices, "Doug Client", 0.75f, 0.75f, 0);
+        fr.draw(matrices, "Doug Client", 1, 1, -1);
+        matrices.scale(0.25f, 0.25f, 0.25f);
+        fr.drawWithShadow(matrices, String.format("FPS: %s", mc.fpsDebugString.split(" ")[0]), 1, fr.fontHeight * 5, 0x00ff00);
         // Arraylist
         for (Utility u : sortedUtilities) {
             String name = u.getName();
