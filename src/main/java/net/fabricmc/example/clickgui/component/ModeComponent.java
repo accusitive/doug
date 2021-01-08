@@ -5,7 +5,6 @@ import org.lwjgl.glfw.GLFW;
 import net.fabricmc.example.Client;
 import net.fabricmc.example.value.ModeValue;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
