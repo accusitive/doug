@@ -9,7 +9,7 @@ import net.fabricmc.example.utilities.Flight;
 import net.fabricmc.example.utilities.AutoSprint;
 import net.fabricmc.example.utilities.Clickgui;
 import net.fabricmc.example.utilities.Hud;
-import net.fabricmc.loom.providers.MinecraftAssetsProvider;
+import net.fabricmc.example.utilities.TestingUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -23,14 +23,10 @@ public class Client {
         this.categoryComponents = new ArrayList<>();
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
-        // this.utilities.put("sprint2", new AutoSprint());
-        // this.utilities.put("sprint3", new AutoSprint());
-        // this.utilities.put("sprint4", new AutoSprint());
-        // this.utilities.put("sprint5", new AutoSprint());
-        // this.utilities.put("sprint6", new AutoSprint());
         this.utilities.put("hud", new Hud());
         this.utilities.put("click_gui", new Clickgui());
         this.utilities.put("flight", new Flight());
+        this.utilities.put("testing", new TestingUtil());
 
         for (Utility u : this.utilities.values()) {
             u.init();
@@ -68,12 +64,10 @@ public class Client {
     }
 
 	public void mousePress(int button, int action) {
-        System.out.println(this.categoryComponents());
-        if(MinecraftClient.getInstance().currentScreen instanceof ClickguiScreen){
-            ClickguiScreen cgs = (ClickguiScreen) MinecraftClient.getInstance().currentScreen;
-
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if(mc.currentScreen instanceof ClickguiScreen){
+            ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
             for(CategoryComponent cg : cgs.categoryComponents) {
-                System.out.println(cg);
                 cg.mousePress(button, action);
             }
         }
@@ -86,12 +80,12 @@ public class Client {
         this.clickguiScreen = cgs;
     }
     public static int panelColor() {
-        return 0x80000000;
+        return 0xee000000;
     }
     public static int panelText() {
         return -1;
     }
     public static int panelSelectedColor() {
-        return 0x80ffffff;
+        return 0xeedddddd;
     }
 }

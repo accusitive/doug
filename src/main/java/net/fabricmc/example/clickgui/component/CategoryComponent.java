@@ -2,14 +2,12 @@ package net.fabricmc.example.clickgui.component;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.fabricmc.example.Client;
 import net.fabricmc.example.DougMod;
 import net.fabricmc.example.Utility;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Util;
-
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class CategoryComponent extends Component {
@@ -30,27 +28,20 @@ public class CategoryComponent extends Component {
 
     public CategoryComponent setCategory(Utility.Category category) {
         this.category = category;
-        System.out.println("setting category to");
-        System.out.println(category);
         for (Utility m : getModsForCategory(category)) {
-            System.out.println(m);
-            System.out.println("About to add module compoenents");
             ModuleComponent mc = new ModuleComponent(this.x, this.y);
             mc.setModule(m);
             mc.parent = this;
-            System.out.println("About to add to modulecOmpoemnets array");
             moduleComponents.add(mc);
-            System.out.println("Adde to modulecompoenents array");
         }
         return this;
     }
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY) {
-
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-
+        MinecraftClient mc = MinecraftClient.getInstance();
         if (GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), 0) == 0) {
             this.dragging = false;
         }
@@ -59,11 +50,12 @@ public class CategoryComponent extends Component {
             this.x = (start_of_click_x + mouseX);
             this.y = (start_of_click_y + mouseY);
         }
-
+        String s = category.name();
+        int w = mc.inGameHud.getFontRenderer().getWidth(s);
         DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height,
-                hovered(mouseX, mouseY) ? 0x8038a9ff : 0x80777777);
-        MinecraftClient.getInstance().inGameHud.getFontRenderer().drawWithShadow(matrixStack, category.name(),
-                this.x + 4, this.y + 3, -1);
+                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack,s,
+                this.x + (this.width - w) / 2, this.y + 3, -1);
 
         if (moduleComponents != null && this.open) {
             int y = height;

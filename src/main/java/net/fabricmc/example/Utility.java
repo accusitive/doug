@@ -67,7 +67,7 @@ public class Utility {
 
     }
     public String getName() {
-        return  String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 0), this.name());
+        return  String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 1), this.name());
  
     }
 

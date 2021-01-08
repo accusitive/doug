@@ -16,9 +16,9 @@ public class Clickgui extends Utility {
     @Override
     public void onEnable() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if(DougMod.client.getClickguiScreen() == null) {
+        // if(DougMod.client.getClickguiScreen() == null) {
             DougMod.client.setClickguiScreen(new ClickguiScreen());
-        }
+        // }
         mc.openScreen(DougMod.client.getClickguiScreen());
         this.toggle();
         super.onEnable();

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.fabricmc.example.BoolValue;
 import net.fabricmc.example.NumberValue;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.Value;

@@ -6,16 +6,16 @@ import java.util.Map;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.fabricmc.example.Client;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.Value;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.widget.ButtonListWidget.ButtonEntry;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class ModuleComponent extends Component {
     public Utility utility;
-    private boolean click;
     private boolean open = false;
     private int mouseX, mouseY;
 
@@ -50,15 +50,17 @@ public class ModuleComponent extends Component {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-
+        
+        MinecraftClient mc = MinecraftClient.getInstance();
+        
         DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height,
-                hovered(mouseX, mouseY) ? 0x8038a9ff : 0x80777777);
-        for (int i = 0; i < this.height; i++) {
-            DrawableHelper.fill(matrixStack, this.x, this.y + i, this.x + 2, this.y + i + 1,
-                    hovered(mouseX, mouseY) ? -1 : 0xff0000);
+                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
+                utility.enabled() ? 0x8038a9ff : -1);
+        if (this.optionComponents.size() != 0) {
+            mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, this.open ? "←" : "→", this.x + this.width - 20,
+                    this.y + 4, -1);
         }
-        MinecraftClient.getInstance().inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(),
-                this.x + 4, this.y + 4, utility.enabled() ? 0x8038a9ff : -1);
         int y = 0;
         if (this.open) {
             for (OptionComponent oc : this.optionComponents) {
@@ -80,12 +82,12 @@ public class ModuleComponent extends Component {
             } else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                 if (action == GLFW.GLFW_PRESS) {
                     boolean before = this.open;
-                    for(ModuleComponent mc : this.parent.moduleComponents){
-                        for(OptionComponent oc: mc.optionComponents) {
+                    for (ModuleComponent mc : this.parent.moduleComponents) {
+                        for (OptionComponent oc : mc.optionComponents) {
                             oc.parent.open = false;
                         }
                     }
-                        
+
                     this.open = !before;
                 }
             }

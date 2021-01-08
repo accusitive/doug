@@ -1,14 +1,12 @@
 package net.fabricmc.example.utilities;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import org.lwjgl.glfw.GLFW;
 
-import it.unimi.dsi.fastutil.ints.IntComparator;
 import net.fabricmc.example.DougMod;
 import net.fabricmc.example.Utility;
 import net.minecraft.client.MinecraftClient;
