@@ -10,7 +10,11 @@
     "TitleScreenMixin",
     "KeyPressMixin",
     "HudRenderMixin",
-    "MousePressMixin"
+    "MousePressMixin",
+    "MinecraftClientMixin",
+    "Matrix4fMixin",
+    "LivingEntityRendererMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1

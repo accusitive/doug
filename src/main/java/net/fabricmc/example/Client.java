@@ -3,13 +3,18 @@ package net.fabricmc.example;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.ibm.icu.util.ULocale.Category;
+
 import net.fabricmc.example.clickgui.ClickguiScreen;
 import net.fabricmc.example.clickgui.component.CategoryComponent;
 import net.fabricmc.example.utilities.Flight;
+import net.fabricmc.example.utilities.Fullbright;
 import net.fabricmc.example.utilities.AutoSprint;
 import net.fabricmc.example.utilities.Clickgui;
 import net.fabricmc.example.utilities.Hud;
-import net.fabricmc.example.utilities.TestingUtil;
+import net.fabricmc.example.utilities.Killaura;
+import net.fabricmc.example.utilities.Velocity;
+import net.fabricmc.example.utilities.TriggerBot;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -26,15 +31,19 @@ public class Client {
         this.utilities.put("hud", new Hud());
         this.utilities.put("click_gui", new Clickgui());
         this.utilities.put("flight", new Flight());
-        this.utilities.put("testing", new TestingUtil());
-
+        this.utilities.put("velocity", new Velocity());
+        this.utilities.put("fullbright", new Fullbright());
+        this.utilities.put("killaura", new Killaura());
+        this.utilities.put("triggerbot", new TriggerBot());
+        this.utilities.put("chams", new Utility("Chams", 0, net.fabricmc.example.Utility.Category.Render));
+        
         for (Utility u : this.utilities.values()) {
             u.init();
         }
     }
 
     public void keyPress(int key) {
-        if (utilities != null) {
+        if (utilities != null && MinecraftClient.getInstance().currentScreen == null) {
             for (Utility u : this.utilities.values()) {
                 if (key == u.bind) {
                     u.toggle();
@@ -87,5 +96,8 @@ public class Client {
     }
     public static int panelSelectedColor() {
         return 0xeedddddd;
+    }
+    public static int mainColor() {
+        return 0xff00cc66;
     }
 }

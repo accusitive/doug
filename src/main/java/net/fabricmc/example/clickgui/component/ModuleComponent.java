@@ -7,6 +7,7 @@ import java.util.Map;
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.example.Client;
+import net.fabricmc.example.RenderUtils;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
@@ -51,11 +52,17 @@ public class ModuleComponent extends Component {
         this.mouseY = mouseY;
         
         MinecraftClient mc = MinecraftClient.getInstance();
-        
-        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
-                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        if(!this.open) {
+            RenderUtils.drawBorderedRect(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1, hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor(), -1);
+        } else {
+        RenderUtils.drawBorderedLeft(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1,
+                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor(), -1);
+
+        }
+        // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
+        //         hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
         mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
-                utility.enabled() ? 0x8038a9ff : -1);
+                utility.enabled() ? Client.mainColor() : -1);
         if (this.optionComponents.size() != 0) {
             mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, this.open ? "←" : "→", this.x + this.width - 20,
                     this.y + 4, -1);

@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.example.value.BoolValue;
 import net.fabricmc.example.Client;
+import net.fabricmc.example.RenderUtils;
 import net.fabricmc.example.value.ModeValue;
 import net.fabricmc.example.value.NumberValue;
 import net.fabricmc.example.value.Value;
@@ -31,8 +32,8 @@ public class OptionComponent extends Component {
     public OptionComponent setVal(String valname, Value val) {
         this.valname = valname;
         this.val = val;
-        if(this.val instanceof ModeValue) {
-            for(String s: ((ModeValue)this.val).tags()) {
+        if (this.val instanceof ModeValue) {
+            for (String s : ((ModeValue) this.val).tags()) {
                 ModeComponent mc = new ModeComponent(this.x, this.y);
                 mc.setMode((ModeValue) this.val);
                 mc.setTag(s);
@@ -48,24 +49,29 @@ public class OptionComponent extends Component {
         this.mouseY = mouseY;
         MinecraftClient mc = MinecraftClient.getInstance();
         TextRenderer fr = mc.inGameHud.getFontRenderer();
-        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
-                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        RenderUtils.drawBorderedRect(matrixStack, this.x + 1, this.y, this.x + this.width,
+                this.y + this.height(), 1, Client.panelColor(), -1);
+        // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y +
+        // this.height(),
+        // hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
         if (this.val instanceof BoolValue) {
             BoolValue boolValue = (BoolValue) this.val;
             String s = String.format("%s: %s", this.valname, boolValue.get() ? "§a✔" : "§c✖");
             int w = fr.getWidth(s);
+            DrawableHelper.fill(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), boolValue.get() ? 0xff009900 : 0xff990000);
             fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2), this.y + 3, -1);
         } else if (this.val instanceof NumberValue) {
             NumberValue numValue = (NumberValue) this.val;
-            matrixStack.push();
-            matrixStack.scale(0.80000f, 0.80000f, 0.80000f);
+
             String s = String.format("%s: %.1f", this.valname, numValue.get());
             int w = fr.getWidth(s);
+            float zidth = map(numValue.get(), numValue.min(), numValue.max(), 0, this.width);
+            DrawableHelper.fill(matrixStack, this.x, this.y, this.x + (int) zidth, this.y + height, Client.mainColor());
+            matrixStack.push();
+            matrixStack.scale(0.80000f, 0.80000f, 0.80000f);
             fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2) * 1.25f, (this.y + 3) * 1.25f, -1);
             matrixStack.pop();
-            float zidth = map(numValue.get(), numValue.min(), numValue.max(), 0, this.width);
-            DrawableHelper.fill(matrixStack, this.x, this.y + (this.height() - 2), this.x + (int) zidth, this.y + height,
-                    -1);
+
             if (hovered(mouseX, mouseY)) {
                 if (GLFW.glfwGetMouseButton(mc.getWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == 1) {
                     NumberValue nv = (NumberValue) this.val;
@@ -73,15 +79,15 @@ public class OptionComponent extends Component {
                     nv.set(num);
                 }
             }
-        }else if(this.val instanceof ModeValue) {
+        } else if (this.val instanceof ModeValue) {
             ModeValue mv = (ModeValue) this.val;
             String s = String.format("%s: %s", valname, mv.current());
             int w = fr.getWidth(s);
             fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2), (this.y + 3), -1);
         }
         int y = 0;
-        if(this.open){
-            for(ModeComponent mc_ : this.modeComponents) {
+        if (this.open) {
+            for (ModeComponent mc_ : this.modeComponents) {
                 mc_.render(matrixStack, mouseX, mouseY);
                 mc_.x = this.x + this.width;
                 mc_.y = this.y + y;
@@ -89,7 +95,6 @@ public class OptionComponent extends Component {
             }
         }
 
-       
         super.render(matrixStack, mouseX, mouseY);
     }
 
@@ -100,15 +105,15 @@ public class OptionComponent extends Component {
     public void mousePress(int button, int action) {
         if (this.hovered(mouseX, mouseY)) {
             if (action == GLFW.GLFW_PRESS) {
-            if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+                if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                     if (this.val instanceof BoolValue) {
                         BoolValue boolValue = (BoolValue) this.val;
                         boolValue.set(!boolValue.get());
-                    }else if(this.val instanceof ModeValue) {
-                        ModeValue mv = (ModeValue) this.val; 
+                    } else if (this.val instanceof ModeValue) {
+                        ModeValue mv = (ModeValue) this.val;
                         mv.set((mv.currentTag() + 1) % (mv.tagsLen()));
                     }
-                }else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+                } else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                     this.open = !this.open;
                 }
             }
@@ -117,8 +122,9 @@ public class OptionComponent extends Component {
             mc.mousePress(button, action);
         }
     }
+
     @Override
     public int height() {
-        return 14;   
+        return 14;
     }
 }

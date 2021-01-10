@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFW;
 // import org.lwjgl.util.vector.Vector2f;
 // import org.lwjgl.util.vector.Vector3f;
 
+import net.fabricmc.example.Client;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.value.BoolValue;
 import net.fabricmc.example.value.ModeValue;
@@ -19,28 +20,26 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
-public class TestingUtil extends Utility {
+public class TriggerBot extends Utility {
     HashMap<String, Value> settings = new HashMap<>();
-
-    public TestingUtil() {
-        super("TestingUtil", GLFW.GLFW_KEY_C, Category.Movement);
-        this.settings.put("SomeNumber1", new NumberValue(5, 1, 10));
-        this.settings.put("SomeNumber2", new NumberValue(5, 1, 10));
-        this.settings.put("SomeNumber3", new NumberValue(5, 1, 10));
-        this.settings.put("SomeBool1", new BoolValue(true));
-        this.settings.put("SomeBool2", new BoolValue(false));
-        this.settings.put("SomeBool3", new BoolValue(true));
-        this.settings.put("SomeMode1", new ModeValue("1", "2", "Three", "Four (4)"));
-        this.settings.put("SomeMode2", new ModeValue("beans", "doug", "client", "on top"));
+    LivingEntity e;
+    public TriggerBot() {
+        super("TriggerBot", GLFW.GLFW_KEY_C, Category.Combat);
+        this.settings.put("Reach", new NumberValue(3.4f, 1, 10));
+        this.settings.put("HideSwing", new BoolValue(false));
 
     }
 
@@ -58,6 +57,11 @@ public class TestingUtil extends Utility {
 
     @Override
     public void render(MatrixStack matrices, float tickDelta) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (e != null) {
+            DrawableHelper.fill(matrices, 4, 100, 104, 200, Client.panelColor());
+            mc.textRenderer.drawWithShadow(matrices, e.getDisplayName(), 8, 100, -1);
+        }
         // TODO Auto-generated method stub
         super.render(matrices, tickDelta);
     }
@@ -65,8 +69,22 @@ public class TestingUtil extends Utility {
     @Override
     public void tick() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if(mc.player.hurtTime == 7) {
-            mc.player.setVelocity(mc.player.getVelocity().multiply(0.87f));
+        float reach = ((NumberValue) this.settings.get("Reach")).get();
+        // HitResult hr = mc.player.raycast(reach, 0, false);
+        // if(hr.getType() == HitResult.Type.ENTITY) {
+        //     hr.
+        // }
+        if(mc.targetedEntity != null) {
+            this.e = (LivingEntity) mc.targetedEntity;
+            if (mc.player.getAttackCooldownProgress(0f) < 1) {
+                return;
+            }
+                mc.interactionManager.attackEntity(mc.player, e);
+                if(!((BoolValue)this.settings.get("HideSwing")).get()) {
+                    mc.player.swingHand(Hand.MAIN_HAND);
+                }else {
+                    mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
+                }
         }
         super.tick();
     }

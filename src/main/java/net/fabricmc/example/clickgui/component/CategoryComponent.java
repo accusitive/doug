@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.example.Client;
 import net.fabricmc.example.DougMod;
+import net.fabricmc.example.RenderUtils;
 import net.fabricmc.example.Utility;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -52,10 +53,16 @@ public class CategoryComponent extends Component {
         }
         String s = category.name();
         int w = mc.inGameHud.getFontRenderer().getWidth(s);
-        DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
-                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
+        //         hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        if(!this.open) {
+        RenderUtils.drawBorderedRect(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1, Client.panelColor(), hovered(mouseX, mouseY) ? Client.panelSelectedColor() : -1);
+        }else {
+        RenderUtils.drawBorderedRectHoriTop(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1, Client.panelColor(), hovered(mouseX, mouseY) ? Client.panelSelectedColor() : -1);
+
+        }
         mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack,s,
-                this.x + (this.width - w) / 2, this.y + 3, -1);
+                this.x + (this.width - w) / 2, this.y + 3, this.dragging ? Client.mainColor() : -1);
 
         if (moduleComponents != null && this.open) {
             int y = height;

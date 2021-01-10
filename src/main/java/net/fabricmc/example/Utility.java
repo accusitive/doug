@@ -8,13 +8,15 @@ import net.fabricmc.example.value.Value;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class Utility {
-    String name;
-    int bind;
-    Boolean state;
-    Category category;
+    public String name;
+    public int bind;
+    public Boolean state;
+    public Category category;
+
     public enum Category {
         Combat, Render, Movement, Player
     }
+
     public Utility(String name, int bind, Category category) {
         this.name = name;
         this.bind = bind;
@@ -62,17 +64,19 @@ public class Utility {
 
     }
 
-	public void render(MatrixStack matrices, float tickDelta) {
+    public void render(MatrixStack matrices, float tickDelta) {
     }
-    public void tick(){
+
+    public void tick() {
 
     }
+
     public String getName() {
-        return  String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 1), this.name());
- 
+        return String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 1), this.name());
+
     }
 
-	public Category category() {
-		return this.category;
-	}
+    public Category category() {
+        return this.category;
+    }
 }

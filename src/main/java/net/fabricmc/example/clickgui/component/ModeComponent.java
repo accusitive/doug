@@ -30,7 +30,7 @@ public class ModeComponent extends Component{
         MinecraftClient mc = MinecraftClient.getInstance();
         boolean enabled = this.mode.current() == this.tag;
         DrawableHelper.fill(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), this.hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
-        DrawableHelper.drawStringWithShadow(matrixStack, mc.textRenderer, this.tag, this.x + 4, this.y + 4, enabled ? 0xff0000 : Client.panelText());
+        DrawableHelper.drawStringWithShadow(matrixStack, mc.textRenderer, this.tag, this.x + 4, this.y + 4, enabled ? 0x8038a9ff : Client.panelText());
         super.render(matrixStack, mouseX, mouseY);
     }
 
