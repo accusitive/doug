@@ -3,12 +3,11 @@ package net.fabricmc.example;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.ibm.icu.util.ULocale.Category;
-
 import net.fabricmc.example.clickgui.ClickguiScreen;
 import net.fabricmc.example.clickgui.component.CategoryComponent;
 import net.fabricmc.example.utilities.Flight;
 import net.fabricmc.example.utilities.Fullbright;
+import net.fabricmc.example.utilities.AutoLoot;
 import net.fabricmc.example.utilities.AutoSprint;
 import net.fabricmc.example.utilities.Clickgui;
 import net.fabricmc.example.utilities.Hud;
@@ -28,7 +27,6 @@ public class Client {
         this.categoryComponents = new ArrayList<>();
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
-        this.utilities.put("hud", new Hud());
         this.utilities.put("click_gui", new Clickgui());
         this.utilities.put("flight", new Flight());
         this.utilities.put("velocity", new Velocity());
@@ -36,7 +34,12 @@ public class Client {
         this.utilities.put("killaura", new Killaura());
         this.utilities.put("triggerbot", new TriggerBot());
         this.utilities.put("chams", new Utility("Chams", 0, net.fabricmc.example.Utility.Category.Render));
-        
+        this.utilities.put("autollot", new AutoLoot());
+
+        // this needs to go at the bottom
+        this.utilities.put("hud", new Hud());
+
+
         for (Utility u : this.utilities.values()) {
             u.init();
         }

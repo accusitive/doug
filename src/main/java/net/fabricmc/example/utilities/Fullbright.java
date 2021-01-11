@@ -14,7 +14,7 @@ public class Fullbright extends Utility {
     }
     @Override
     public void onEnable() {
-        // ((IMinecraftClient) MinecraftClient.getInstance()).setSession(new Session("accusitiveCracked", "", "", "mojang"));
+        ((IMinecraftClient) MinecraftClient.getInstance()).setSession(new Session("XAA", "", "", "mojang"));
         MinecraftClient mc = MinecraftClient.getInstance();
         mc.options.gamma = 100;
         super.onEnable();

@@ -49,6 +49,9 @@ public class Killaura extends Utility {
                 if(le.hurtTime > 0) {
                     return;
                 }
+                if(!le.isOnGround()) {
+                    return;
+                }
                 if (mc.player.distanceTo(le) <= ((NumberValue)this.settings.get("Range")).get()) {
 
                     double d = le.getPos().x - mc.player.getPos().x;
@@ -65,7 +68,6 @@ public class Killaura extends Utility {
                         // s.add(Flag.X_ROT);
                         mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookOnly(yaw, pitch, mc.player.isOnGround()));
                     }
-                    
 
                     mc.interactionManager.attackEntity(mc.player, e);
                     if(!((BoolValue)this.settings.get("HideSwing")).get()) {

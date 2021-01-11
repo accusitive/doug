@@ -13,8 +13,11 @@ import net.fabricmc.example.value.BoolValue;
 import net.fabricmc.example.value.ModeValue;
 import net.fabricmc.example.value.NumberValue;
 import net.fabricmc.example.value.Value;
+import net.fabricmc.fabric.api.event.client.player.ClientPickBlockCallback.Container;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.util.math.Vector3f;
@@ -22,19 +25,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
-public class Velocity extends Utility {
+public class AutoLoot extends Utility {
     HashMap<String, Value> settings = new HashMap<>();
 
-    public Velocity() {
-        super("Velocity", GLFW.GLFW_KEY_0, Category.Combat);
-        this.settings.put("Amount", new NumberValue(85, 0, 100));
-        this.settings.put("Mode", new ModeValue("Cubecraft", "Packet"));
+    public AutoLoot() {
+        super("AutoLoot", GLFW.GLFW_KEY_GRAVE_ACCENT, Category.Player);
+
     }
 
     @Override
@@ -58,13 +65,23 @@ public class Velocity extends Utility {
     @Override
     public void tick() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if(((ModeValue)this.settings.get("Mode")).current() == "Cubecraft"){
-            if(mc.player.hurtTime > 2) {
-                float amt = ((NumberValue) this.settings.get("Amount")).get();
-                mc.player.setVelocity(mc.player.getVelocity().multiply(amt/100));
+        if (mc.currentScreen instanceof GenericContainerScreen) {
+            GenericContainerScreen gcs = (GenericContainerScreen) mc.currentScreen;
+            for (Slot s : gcs.getScreenHandler().slots) {
+                System.out.println(s.id);
+                if(mc.player.age % 10 == s.id % 10) {
+                if (s.id <= 27) {
+                    if (s.getStack().getItem().isDamageable() || s.getStack().getItem().isFood()
+                            || s.getStack().getItem() == Items.GOLDEN_APPLE || s.getStack().getItem() == Items.BEEF) {
+                            mc.getNetworkHandler().sendPacket(new ClickSlotC2SPacket(gcs.getScreenHandler().syncId, s.id, 1,
+                                    SlotActionType.QUICK_MOVE, s.getStack(), (short) s.id));
+                        }
+                    }
+                }
+               
             }
+            // mc.currentScreen.onClose();
         }
-       
         super.tick();
     }
 

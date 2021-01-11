@@ -7,7 +7,19 @@ import org.lwjgl.glfw.GLFW;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.value.NumberValue;
 import net.fabricmc.example.value.Value;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.data.client.model.BlockStateSupplier;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 
 public class Flight extends Utility {
     HashMap<String, Value> settings = new HashMap<>();
@@ -19,9 +31,8 @@ public class Flight extends Utility {
     @Override
     public void tick() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        NumberValue flySpeed = ((NumberValue) settings.get("Speed"));
-        mc.player.abilities.setFlySpeed(flySpeed.get()/10);
-        mc.player.abilities.flying = true;
+        mc.player.addVelocity(0, -mc.player.getVelocity().y, 0);
+
         super.tick();
     }
     @Override

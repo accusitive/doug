@@ -11,7 +11,6 @@ import net.fabricmc.example.RenderUtils;
 import net.fabricmc.example.Utility;
 import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class ModuleComponent extends Component {

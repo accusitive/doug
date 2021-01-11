@@ -13,7 +13,8 @@
     "MousePressMixin",
     "MinecraftClientMixin",
     "Matrix4fMixin",
-    "LivingEntityRendererMixin"
+    "LivingEntityRendererMixin",
+    "ClientPlayNetworkHandlerMixin"
 
   ],
   "injectors": {
