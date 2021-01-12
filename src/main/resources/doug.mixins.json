@@ -15,7 +15,8 @@
     "LivingEntityRendererMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientPlayerEntityMixin",
-    "ClientConnectionMixin"
+    "ClientConnectionMixin",
+    "ClientPlayerInteractionManagerMixin"
 
   ],
   "injectors": {

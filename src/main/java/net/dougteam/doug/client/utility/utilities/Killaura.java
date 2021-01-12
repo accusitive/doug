@@ -2,12 +2,15 @@ package net.dougteam.doug.client.utility.utilities;
 
 import java.util.HashMap;
 
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.value.BoolValue;
 import net.dougteam.doug.client.value.FloatValue;
 import net.dougteam.doug.client.value.IntValue;
+import net.dougteam.doug.events.PreMotionUpdatesEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -28,8 +31,8 @@ public class Killaura extends Utility {
 
     }
 
-    @Override
-    public void tick() {
+    @EventTarget
+    public void onPreMotionUpdatesEvent(PreMotionUpdatesEvent pmue) {
         MinecraftClient mc = MinecraftClient.getInstance();
 
         for (Entity e : mc.world.getEntities()) {
@@ -82,7 +85,6 @@ public class Killaura extends Utility {
                 }
             }
         }
-        super.tick();
     }
 
     @Override

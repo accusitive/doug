@@ -1,11 +1,16 @@
 package net.dougteam.doug.client.utility.utilities;
 
 import java.util.HashMap;
+
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 
-import net.dougteam.doug.client.Client;
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.value.BoolValue;
+import net.dougteam.doug.events.PreMotionUpdatesEvent;
+import net.dougteam.doug.events.PreMotionUpdatesEvent;
+import net.dougteam.doug.events.TickEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -33,19 +38,9 @@ public class TriggerBot extends Utility {
         return super.enabled();
     }
 
-    @Override
-    public void render(MatrixStack matrices, float tickDelta) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (e != null) {
-            DrawableHelper.fill(matrices, 4, 100, 104, 200, Client.panelColor());
-            mc.textRenderer.drawWithShadow(matrices, e.getDisplayName(), 8, 100, -1);
-        }
-        // TODO Auto-generated method stub
-        super.render(matrices, tickDelta);
-    }
 
-    @Override
-    public void tick() {
+    @EventTarget
+    public void onPreMotionUpdatesEvent(PreMotionUpdatesEvent ev) {
         MinecraftClient mc = MinecraftClient.getInstance();
         // HitResult hr = mc.player.raycast(reach, 0, false);
         // if(hr.getType() == HitResult.Type.ENTITY) {
@@ -63,7 +58,6 @@ public class TriggerBot extends Utility {
                     mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
                 }
         }
-        super.tick();
     }
 
 }

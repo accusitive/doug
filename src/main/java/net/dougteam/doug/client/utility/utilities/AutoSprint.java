@@ -2,6 +2,8 @@ package net.dougteam.doug.client.utility.utilities;
 
 import java.util.HashMap;
 
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.dougteam.doug.client.utility.Utility;
@@ -17,7 +19,7 @@ public class AutoSprint extends Utility {
         this.settings.put("Always", new BoolValue(false));
     }
 
-    @Override
+    @EventTarget
     public void onPreMotionUpdate() {
         MinecraftClient mc = MinecraftClient.getInstance();
         boolean omni = ((BoolValue) this.getSettings().get("Omni")).get();
@@ -28,7 +30,6 @@ public class AutoSprint extends Utility {
         } else {
             mc.player.setSprinting(true);
         }
-        super.tick();
     }
 
 }

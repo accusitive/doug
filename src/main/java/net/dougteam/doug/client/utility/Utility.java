@@ -2,6 +2,8 @@ package net.dougteam.doug.client.utility;
 
 import java.util.HashMap;
 
+import com.darkmagician6.eventapi.EventManager;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.dougteam.doug.client.value.Value;
@@ -46,11 +48,11 @@ public class Utility {
     }
 
     public void onEnable() {
-
+        EventManager.register(this);
     }
 
     public void onDisable() {
-
+        EventManager.unregister(this);
     }
 
     public void toggle() {
@@ -64,15 +66,8 @@ public class Utility {
 
     }
 
-    public void render(MatrixStack matrices, float tickDelta) {
-    }
-
-    public void tick() {
-
-    }
-
     public String getName() {
-        return String.format("[%s] %s", GLFW.glfwGetKeyName(this.bind(), 1), this.name());
+        return this.name;
 
     }
 
@@ -80,10 +75,5 @@ public class Utility {
         return this.category;
     }
 
-	public void onPreMotionUpdate() {
-	}
-
-	public void onPostMotionUpdate() {
-    }
     
 }

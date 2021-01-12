@@ -1,5 +1,7 @@
 package net.dougteam.doug.client.clickgui.component;
 
+import com.darkmagician6.eventapi.EventManager;
+
 import net.minecraft.client.util.math.MatrixStack;
 
 public class Component {
@@ -27,6 +29,7 @@ public class Component {
         this.y = y;
         this.width = width;
         this.height = height;
+        EventManager.register(this);
     }
     public int height() {
         return this.height;

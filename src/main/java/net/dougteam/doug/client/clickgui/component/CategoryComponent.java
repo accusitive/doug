@@ -6,9 +6,14 @@ import net.dougteam.doug.DougMod;
 import net.dougteam.doug.client.Client;
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.utils.RenderUtils;
+import net.dougteam.doug.events.KeyEvent;
+import net.dougteam.doug.events.MouseEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import java.util.ArrayList;
+
+import com.darkmagician6.eventapi.EventManager;
+import com.darkmagician6.eventapi.EventTarget;
 
 public class CategoryComponent extends Component {
     int start_of_click_x = 0;
@@ -79,7 +84,26 @@ public class CategoryComponent extends Component {
         super.render(matrixStack, mouseX, mouseY);
     }
 
-    public void mousePress(int button, int action) {
+    // public void mousePress(int button, int action) {
+    // if (this.hovered(this.mouseX, this.mouseY)) {
+    // if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && action == GLFW.GLFW_PRESS) {
+    // this.open = !this.open;
+    // }
+    // start_of_click_x = this.x - this.mouseX;
+    // start_of_click_y = this.y - this.mouseY;
+    // dragging = true;
+    // } else {
+    // dragging = false;
+    // }
+    // for (ModuleComponent mb : moduleComponents) {
+    // mb.mousePress(button, action);
+    // }
+    // }
+
+    @EventTarget
+    public void mousePress(MouseEvent event) {
+        int button = event.button;
+        int action = event.action;
         if (this.hovered(this.mouseX, this.mouseY)) {
             if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && action == GLFW.GLFW_PRESS) {
                 this.open = !this.open;
@@ -101,19 +125,11 @@ public class CategoryComponent extends Component {
             return temp;
         }
         for (Utility u : DougMod.client.utilities().values()) {
-
             if (u.category() == c) {
                 temp.add(u);
             }
         }
-        System.out.println(temp);
         return temp;
-    }
-
-    public void keyPress(int key) {
-        for (ModuleComponent mc : this.moduleComponents) {
-            mc.keyPress(key);
-        }
     }
 
 }

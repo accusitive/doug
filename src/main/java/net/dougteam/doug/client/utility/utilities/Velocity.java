@@ -2,6 +2,9 @@ package net.dougteam.doug.client.utility.utilities;
 
 import java.util.HashMap;
 
+import com.darkmagician6.eventapi.EventTarget;
+
+import org.apache.commons.lang3.event.EventUtils;
 import org.lwjgl.glfw.GLFW;
 // import org.lwjgl.util.vector.Matrix3f;
 // import org.lwjgl.util.vector.Vector2f;
@@ -11,6 +14,7 @@ import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.value.FloatValue;
 import net.dougteam.doug.client.value.ModeValue;
 import net.dougteam.doug.client.value.Value;
+import net.dougteam.doug.events.TickEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -34,14 +38,9 @@ public class Velocity extends Utility {
         return super.enabled();
     }
 
-    @Override
-    public void render(MatrixStack matrices, float tickDelta) {
-        // TODO Auto-generated method stub
-        super.render(matrices, tickDelta);
-    }
 
-    @Override
-    public void tick() {
+    @EventTarget
+    public void tick(TickEvent e) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if(((ModeValue)this.settings.get("Mode")).current() == "Cubecraft"){
             if(mc.player.hurtTime > 2) {
@@ -49,8 +48,6 @@ public class Velocity extends Utility {
                 mc.player.setVelocity(mc.player.getVelocity().multiply(amt/100));
             }
         }
-       
-        super.tick();
     }
 
     @Override

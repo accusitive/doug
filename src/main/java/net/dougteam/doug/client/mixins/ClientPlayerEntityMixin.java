@@ -1,11 +1,14 @@
 package net.dougteam.doug.client.mixins;
 
+import com.darkmagician6.eventapi.EventManager;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.dougteam.doug.DougMod;
+import net.dougteam.doug.events.PostMotionUpdatesEvent;
+import net.dougteam.doug.events.PreMotionUpdatesEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
@@ -13,10 +16,9 @@ import net.minecraft.client.network.ClientPlayerEntity;
 public class ClientPlayerEntityMixin {
     @Inject(at=@At("HEAD"), method="tick()V")
     public void onPreMotionUpdate(CallbackInfo info){
-        //      if (this.world.isChunkLoaded(new BlockPos(this.getX(), 0.0D, this.getZ()))) {
             MinecraftClient mc = MinecraftClient.getInstance();
             if(mc.world.isChunkLoaded(mc.player.getBlockPos())){
-                DougMod.client.onPreMotionUpdate();
+                EventManager.call(new PreMotionUpdatesEvent());
             }
     }
 
@@ -25,7 +27,7 @@ public class ClientPlayerEntityMixin {
         //      if (this.world.isChunkLoaded(new BlockPos(this.getX(), 0.0D, this.getZ()))) {
             MinecraftClient mc = MinecraftClient.getInstance();
             if(mc.world.isChunkLoaded(mc.player.getBlockPos())){
-                DougMod.client.onPostMotionUpdate();
+                EventManager.call(new PostMotionUpdatesEvent());
             }
     }
 } 

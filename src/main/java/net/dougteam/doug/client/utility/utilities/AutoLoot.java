@@ -2,12 +2,15 @@ package net.dougteam.doug.client.utility.utilities;
 
 import java.util.HashMap;
 
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 // import org.lwjgl.util.vector.Matrix3f;
 // import org.lwjgl.util.vector.Vector2f;
 // import org.lwjgl.util.vector.Vector3f;
 
 import net.dougteam.doug.client.utility.Utility;
+import net.dougteam.doug.events.TickEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -35,14 +38,9 @@ public class AutoLoot extends Utility {
         return super.enabled();
     }
 
-    @Override
-    public void render(MatrixStack matrices, float tickDelta) {
-        // TODO Auto-generated method stub
-        super.render(matrices, tickDelta);
-    }
 
-    @Override
-    public void tick() {
+    @EventTarget
+    public void tick(TickEvent te) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.currentScreen instanceof GenericContainerScreen) {
             GenericContainerScreen gcs = (GenericContainerScreen) mc.currentScreen;
@@ -61,7 +59,6 @@ public class AutoLoot extends Utility {
             }
             // mc.currentScreen.onClose();
         }
-        super.tick();
     }
 
 }

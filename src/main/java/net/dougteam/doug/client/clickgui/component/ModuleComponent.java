@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.dougteam.doug.client.Client;
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.utils.RenderUtils;
 import net.dougteam.doug.client.value.Value;
+import net.dougteam.doug.events.KeyEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -57,8 +60,10 @@ public class ModuleComponent extends Component {
         // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y +
         // this.height(),
         // hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
-        mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
+        mc.textRenderer.drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
                 utility.enabled() ? Client.mainColor() : -1);
+                String binding = this.listening ? ".." : GLFW.glfwGetKeyName(utility.bind, 0);
+        mc.textRenderer.drawWithShadow(matrixStack, binding, this.x + this.width - 40, this.y + 4, -1);
         if (this.optionComponents.size() != 0) {
             mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, this.open ? "←" : "→", this.x + this.width - 20,
                     this.y + 4, -1);
@@ -105,7 +110,9 @@ public class ModuleComponent extends Component {
         }
     }
 
-	public void keyPress(int key) {
+    @EventTarget
+    public void keyPress(KeyEvent kpe) {
+        int key = kpe.getKey();
         if(this.listening) {
             if(key != GLFW.GLFW_KEY_SPACE) {
                 this.utility.bind = key;

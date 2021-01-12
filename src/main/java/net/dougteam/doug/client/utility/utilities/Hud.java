@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import com.darkmagician6.eventapi.EventTarget;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.dougteam.doug.DougMod;
@@ -13,6 +15,7 @@ import net.dougteam.doug.client.Client;
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.utils.RenderUtils;
 import net.dougteam.doug.client.value.BoolValue;
+import net.dougteam.doug.events.Render2DEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
@@ -37,9 +40,10 @@ public class Hud extends Utility {
      * 
      * }); }
      */
-    @Override
-    public void render(MatrixStack matrices, float tickDelta) {
-        super.render(matrices, tickDelta);
+    @EventTarget()
+    public void render(Render2DEvent event) {
+        MatrixStack matrices = event.matrices;
+        float tickDelta = event.tickDelta;
         MinecraftClient mc = MinecraftClient.getInstance();
 
         TextRenderer fr = mc.inGameHud.getFontRenderer();

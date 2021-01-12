@@ -41,20 +41,6 @@ public class TestingUtil extends Utility {
         return super.enabled();
     }
 
-    @Override
-    public void render(MatrixStack matrices, float tickDelta) {
-        // TODO Auto-generated method stub
-        super.render(matrices, tickDelta);
-    }
-
-    @Override
-    public void tick() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if(mc.player.hurtTime == 7) {
-            mc.player.setVelocity(mc.player.getVelocity().multiply(0.87f));
-        }
-        super.tick();
-    }
 
 }
 

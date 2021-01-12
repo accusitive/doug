@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.darkmagician6.eventapi.EventManager;
+import com.darkmagician6.eventapi.EventTarget;
 
 import net.dougteam.doug.client.clickgui.ClickguiScreen;
 import net.dougteam.doug.client.clickgui.component.CategoryComponent;
 import net.dougteam.doug.client.utility.Utility;
 import net.dougteam.doug.client.utility.Utility.Category;
 import net.dougteam.doug.client.utility.utilities.*;
-
+import net.dougteam.doug.events.KeyEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.Packet;
@@ -22,7 +23,9 @@ public class Client {
     HashMap<String, Utility> utilities;
     ArrayList<CategoryComponent> categoryComponents;
     ClickguiScreen clickguiScreen;
+
     public void init() {
+        EventManager.register(this);
         this.categoryComponents = new ArrayList<>();
         this.utilities = new HashMap<>();
         this.utilities.put("sprint", new AutoSprint());
@@ -38,102 +41,94 @@ public class Client {
         // this needs to go at the bottom
         this.utilities.put("hud", new Hud());
 
-
         for (Utility u : this.utilities.values()) {
             u.init();
         }
     }
 
-    public void keyPress(int key) {
+    @EventTarget
+    public void keyPress(KeyEvent ke) {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (utilities != null && mc.currentScreen == null) {
             for (Utility u : this.utilities.values()) {
-                if (key == u.bind) {
+                if (ke.getKey() == u.bind) {
                     u.toggle();
                 }
             }
-        }else if(mc.currentScreen instanceof ClickguiScreen){
-            ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
-            for(CategoryComponent cg : cgs.categoryComponents) {
-                cg.keyPress(key);
-            }
         }
-
-        
+        // public void keyPress(int key) {
+        // MinecraftClient mc = MinecraftClient.getInstance();
+        // if (utilities != null && mc.currentScreen == null) {
+        // for (Utility u : this.utilities.values()) {
+        // if (key == u.bind) {
+        // u.toggle();
+        // }
+        // }
+        // }
+        // else if(mc.currentScreen instanceof ClickguiScreen){
+        // ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
+        // for(CategoryComponent cg : cgs.categoryComponents) {
+        // cg.keyPress(key);
+        // }
+        // }
     }
 
-    public void render(MatrixStack matrices, float tickDelta) {
-        if (utilities != null) {
-            utilities.values().stream().filter(u -> u.state).forEach(u -> u.render(matrices, tickDelta));
-        }
-    }
-    public void onPreMotionUpdate(){
-        if (utilities != null) {
-            utilities.values().stream().filter(u -> u.state).forEach(u -> u.onPreMotionUpdate());
-        }
-    }
-    public void onPostMotionUpdate(){
-        if (utilities != null) {
-            utilities.values().stream().filter(u -> u.state).forEach(u -> u.onPostMotionUpdate());
-        }
-    }
     public HashMap<String, Utility> utilities() {
         return this.utilities;
-    }
-
-    public void tick() {
-        if (utilities != null) {
-            utilities.values().stream().filter(u -> u.state).forEach(u -> u.tick());
-        }
     }
 
     public ArrayList<CategoryComponent> categoryComponents() {
         return this.categoryComponents;
     }
 
-	public void mousePress(int button, int action) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if(mc.currentScreen instanceof ClickguiScreen){
-            ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
-            for(CategoryComponent cg : cgs.categoryComponents) {
-                cg.mousePress(button, action);
-            }
-        }
-    }
+    // public void mousePress(int button, int action) {
+    // MinecraftClient mc = MinecraftClient.getInstance();
+    // if(mc.currentScreen instanceof ClickguiScreen){
+    // ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
+    // for(CategoryComponent cg : cgs.categoryComponents) {
+    // cg.mousePress(button, action);
+    // }
+    // }
+    // }
+
     public boolean packetSend(Packet<?> packet) {
-        //TODO: Dispatch to modules
-        if(packet instanceof ChatMessageC2SPacket) {
-            ChatMessageC2SPacket chatPacket = (ChatMessageC2SPacket)packet;
-            if(chatPacket.getChatMessage().startsWith(".")) {
+        // TODO: Dispatch to modules
+        if (packet instanceof ChatMessageC2SPacket) {
+            ChatMessageC2SPacket chatPacket = (ChatMessageC2SPacket) packet;
+            if (chatPacket.getChatMessage().startsWith(".")) {
                 return true;
             }
             // chatPacket.
-        }   
-        return false;     
+        }
+        return false;
     }
+
     public boolean packetReceive(Packet<?> packet) {
-		return false;
-	}
-    public ClickguiScreen getClickguiScreen () {
+        return false;
+    }
+
+    public ClickguiScreen getClickguiScreen() {
         return this.clickguiScreen;
     }
-    public void setClickguiScreen (ClickguiScreen cgs) {
+
+    public void setClickguiScreen(ClickguiScreen cgs) {
         this.clickguiScreen = cgs;
     }
+
     public static int panelColor() {
         return 0xee000000;
     }
+
     public static int panelText() {
         return -1;
     }
+
     public static int panelSelectedColor() {
         return 0xeedddddd;
     }
+
     public static int mainColor() {
         return 0xff00cc66;
     }
 
-	
-
-	
 }

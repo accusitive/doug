@@ -10,11 +10,11 @@ import net.minecraft.text.LiteralText;
 
 public class ClickguiScreen extends Screen {
     public ArrayList<CategoryComponent> categoryComponents = new ArrayList<>();
-
+    public String tooltip = "Hover over something to see a tooltip.";
     public ClickguiScreen() {
         super(new LiteralText("Clickgui"));
         for (Utility.Category c : Utility.Category.values()) {
-            CategoryComponent cg = new CategoryComponent(0 + (c.ordinal() * 140), 0);
+            CategoryComponent cg = new CategoryComponent(0 + (c.ordinal() * 144), 0);
             cg.setCategory(c);
             categoryComponents.add(cg);
         }
