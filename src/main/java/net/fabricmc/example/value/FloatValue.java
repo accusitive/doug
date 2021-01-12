@@ -1,11 +1,11 @@
 package net.fabricmc.example.value;
 
-public class NumberValue extends Value {
+public class FloatValue extends Value {
     float value;
     float max;
     float min;
 
-    public NumberValue(float value, float min, float max) {
+    public FloatValue(float value, float min, float max) {
         this.value = value;
         this.min = min;
         this.max = max;

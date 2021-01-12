@@ -46,13 +46,21 @@ public class Client {
     }
 
     public void keyPress(int key) {
-        if (utilities != null && MinecraftClient.getInstance().currentScreen == null) {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (utilities != null && mc.currentScreen == null) {
             for (Utility u : this.utilities.values()) {
                 if (key == u.bind) {
                     u.toggle();
                 }
             }
+        }else if(mc.currentScreen instanceof ClickguiScreen){
+            ClickguiScreen cgs = (ClickguiScreen) mc.currentScreen;
+            for(CategoryComponent cg : cgs.categoryComponents) {
+                cg.keyPress(key);
+            }
         }
+
+        
     }
 
     public void render(MatrixStack matrices, float tickDelta) {
@@ -60,7 +68,16 @@ public class Client {
             utilities.values().stream().filter(u -> u.state).forEach(u -> u.render(matrices, tickDelta));
         }
     }
-
+    public void onPreMotionUpdate(){
+        if (utilities != null) {
+            utilities.values().stream().filter(u -> u.state).forEach(u -> u.onPreMotionUpdate());
+        }
+    }
+    public void onPostMotionUpdate(){
+        if (utilities != null) {
+            utilities.values().stream().filter(u -> u.state).forEach(u -> u.onPostMotionUpdate());
+        }
+    }
     public HashMap<String, Utility> utilities() {
         return this.utilities;
     }

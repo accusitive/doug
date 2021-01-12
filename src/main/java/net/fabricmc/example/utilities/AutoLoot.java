@@ -1,7 +1,6 @@
 package net.fabricmc.example.utilities;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 import org.lwjgl.glfw.GLFW;
 // import org.lwjgl.util.vector.Matrix3f;
@@ -9,35 +8,16 @@ import org.lwjgl.glfw.GLFW;
 // import org.lwjgl.util.vector.Vector3f;
 
 import net.fabricmc.example.Utility;
-import net.fabricmc.example.value.BoolValue;
-import net.fabricmc.example.value.ModeValue;
-import net.fabricmc.example.value.NumberValue;
 import net.fabricmc.example.value.Value;
-import net.fabricmc.fabric.api.event.client.player.ClientPickBlockCallback.Container;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3d;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
 
 public class AutoLoot extends Utility {
-    HashMap<String, Value> settings = new HashMap<>();
 
     public AutoLoot() {
         super("AutoLoot", GLFW.GLFW_KEY_GRAVE_ACCENT, Category.Player);
@@ -85,10 +65,6 @@ public class AutoLoot extends Utility {
         super.tick();
     }
 
-    @Override
-    public HashMap<String, Value> getSettings() {
-        return settings;
-    }
 }
 
 /*

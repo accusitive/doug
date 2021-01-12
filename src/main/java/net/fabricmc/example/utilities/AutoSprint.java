@@ -10,7 +10,6 @@ import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
 
 public class AutoSprint extends Utility {
-    HashMap<String, Value> settings = new HashMap<>();
 
     public AutoSprint() {
         super("Sprint", GLFW.GLFW_KEY_P, Category.Movement);
@@ -20,7 +19,7 @@ public class AutoSprint extends Utility {
     }
 
     @Override
-    public void tick() {
+    public void onPreMotionUpdate() {
         MinecraftClient mc = MinecraftClient.getInstance();
         boolean omni = ((BoolValue) this.getSettings().get("Omni")).get();
         if (!omni) {
@@ -33,9 +32,4 @@ public class AutoSprint extends Utility {
         super.tick();
     }
 
-    @Override
-    public HashMap<String, Value> getSettings() {
-
-        return settings;
-    }
 }

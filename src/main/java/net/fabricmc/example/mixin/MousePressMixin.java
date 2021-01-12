@@ -15,7 +15,6 @@ public class MousePressMixin {
     @Inject(at = @At("HEAD"), method = "onMouseButton(JIII)V")
     public void onMouseButton(long window, int key, int action, int mods, CallbackInfo info){
         if(action == GLFW.GLFW_PRESS) {
-            System.out.println("Press");
             DougMod.client.mousePress(key, action);
         }
     }

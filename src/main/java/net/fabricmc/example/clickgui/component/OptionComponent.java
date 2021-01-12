@@ -8,7 +8,8 @@ import net.fabricmc.example.value.BoolValue;
 import net.fabricmc.example.Client;
 import net.fabricmc.example.RenderUtils;
 import net.fabricmc.example.value.ModeValue;
-import net.fabricmc.example.value.NumberValue;
+import net.fabricmc.example.value.FloatValue;
+import net.fabricmc.example.value.IntValue;
 import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -49,7 +50,7 @@ public class OptionComponent extends Component {
         this.mouseY = mouseY;
         MinecraftClient mc = MinecraftClient.getInstance();
         TextRenderer fr = mc.inGameHud.getFontRenderer();
-        RenderUtils.drawBorderedRect(matrixStack, this.x + 1, this.y, this.x + this.width,
+        RenderUtils.drawBorderedRectHori(matrixStack, this.x + 1, this.y, this.x + this.width,
                 this.y + this.height(), 1, Client.panelColor(), -1);
         // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y +
         // this.height(),
@@ -60,23 +61,34 @@ public class OptionComponent extends Component {
             int w = fr.getWidth(s);
             DrawableHelper.fill(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), boolValue.get() ? 0xff009900 : 0xff990000);
             fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2), this.y + 3, -1);
-        } else if (this.val instanceof NumberValue) {
-            NumberValue numValue = (NumberValue) this.val;
+        } else if (this.val instanceof FloatValue) {
+            FloatValue numValue = (FloatValue) this.val;
 
             String s = String.format("%s: %.1f", this.valname, numValue.get());
             int w = fr.getWidth(s);
             float zidth = map(numValue.get(), numValue.min(), numValue.max(), 0, this.width);
             DrawableHelper.fill(matrixStack, this.x, this.y, this.x + (int) zidth, this.y + height, Client.mainColor());
-            matrixStack.push();
-            matrixStack.scale(0.80000f, 0.80000f, 0.80000f);
-            fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2) * 1.25f, (this.y + 3) * 1.25f, -1);
-            matrixStack.pop();
+            fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2), (this.y + 3), -1);
 
             if (hovered(mouseX, mouseY)) {
                 if (GLFW.glfwGetMouseButton(mc.getWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == 1) {
-                    NumberValue nv = (NumberValue) this.val;
-                    float num = map(this.mouseX, this.x, this.x + this.width, nv.min() - 0.1f, nv.max() + 0.1f);
-                    nv.set(num);
+                    float num = map(this.mouseX, this.x, this.x + this.width, numValue.min() - 0.1f, numValue.max() + 0.1f);
+                    numValue.set(num);
+                }
+            }
+        } else if (this.val instanceof IntValue) {
+            IntValue intValue = (IntValue) this.val;
+
+            String s = String.format("%s: %s", this.valname, intValue.get());
+            int w = fr.getWidth(s);
+            float zidth = map(intValue.get(), intValue.min(), intValue.max(), 0, this.width);
+            DrawableHelper.fill(matrixStack, this.x, this.y, this.x + (int) zidth, this.y + height, Client.mainColor());
+            fr.drawWithShadow(matrixStack, s, (this.x + (this.width - w) / 2), (this.y + 3), -1);
+
+            if (hovered(mouseX, mouseY)) {
+                if (GLFW.glfwGetMouseButton(mc.getWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == 1) {
+                    int num = (int) map(this.mouseX, this.x, this.x + this.width, intValue.min()-3, intValue.max()+3);
+                    intValue.set(num);
                 }
             }
         } else if (this.val instanceof ModeValue) {

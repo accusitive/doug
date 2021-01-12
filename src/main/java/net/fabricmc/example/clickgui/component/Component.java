@@ -10,13 +10,9 @@ public class Component {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY){
 
     }
-    public void onDrag(int mouseX, int mouseY){
-
-    }
     public boolean xHovered(int mouseX){
         boolean xHovered = mouseX > this.x && mouseX < this.x + this.width;
         return xHovered;
-
     }
     public boolean yHovered(int mouseY){
         boolean yHovered = mouseY > this.y && mouseY < this.y + this.height;

@@ -75,6 +75,8 @@ public class CategoryComponent extends Component {
         super.render(matrixStack, mouseX, mouseY);
     }
 
+
+
     public void mousePress(int button, int action) {
         if (this.hovered(this.mouseX, this.mouseY)) {
             if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && action == GLFW.GLFW_PRESS) {
@@ -105,5 +107,11 @@ public class CategoryComponent extends Component {
         System.out.println(temp);
         return temp;
     }
+
+	public void keyPress(int key) {
+        for(ModuleComponent mc : this.moduleComponents) {
+            mc.keyPress(key);
+        } 
+	}
 
 }

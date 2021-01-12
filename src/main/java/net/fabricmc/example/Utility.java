@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.fabricmc.example.value.BoolValue;
 import net.fabricmc.example.value.Value;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -12,7 +13,7 @@ public class Utility {
     public int bind;
     public Boolean state;
     public Category category;
-
+    public HashMap<String, Value> settings;
     public enum Category {
         Combat, Render, Movement, Player
     }
@@ -22,6 +23,7 @@ public class Utility {
         this.bind = bind;
         this.state = false;
         this.category = category;
+        this.settings = new HashMap<>();
     }
 
     public void init() {
@@ -37,7 +39,7 @@ public class Utility {
     }
 
     public HashMap<String, Value> getSettings() {
-        return new HashMap<>();
+        return settings;
     }
 
     public Boolean enabled() {
@@ -53,7 +55,6 @@ public class Utility {
     }
 
     public void toggle() {
-        System.out.printf("Module %s toggled.", this.name);
         if (this.enabled()) {
             this.state = false;
             this.onDisable();
@@ -79,4 +80,11 @@ public class Utility {
     public Category category() {
         return this.category;
     }
+
+	public void onPreMotionUpdate() {
+	}
+
+	public void onPostMotionUpdate() {
+    }
+    
 }

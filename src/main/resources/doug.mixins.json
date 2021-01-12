@@ -14,7 +14,8 @@
     "MinecraftClientMixin",
     "Matrix4fMixin",
     "LivingEntityRendererMixin",
-    "ClientPlayNetworkHandlerMixin"
+    "ClientPlayNetworkHandlerMixin",
+    "ClientPlayerEntityMixin"
 
   ],
   "injectors": {

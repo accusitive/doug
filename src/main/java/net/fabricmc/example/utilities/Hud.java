@@ -6,9 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.FramebufferInfo;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -21,20 +18,11 @@ import net.fabricmc.example.value.Value;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.command.argument.BrigadierArgumentTypes;
-import net.minecraft.util.math.MathHelper;
 
 public class Hud extends Utility {
     List<Utility> sortedUtilities = new ArrayList<>();
-    HashMap<String, Value> settings = new HashMap<>();
+    // HashMap<String, Value> settings = new HashMap<>();
 
     public Hud() {
         super("Hud", GLFW.GLFW_KEY_MINUS, Category.Render);
@@ -58,16 +46,13 @@ public class Hud extends Utility {
 
         TextRenderer fr = mc.inGameHud.getFontRenderer();
         int width = mc.getWindow().getScaledWidth();
-        int height = mc.getWindow().getScaledHeight();
+        // int height = mc.getWindow().getScaledHeight();
         int y = 0;
-        // matrices.scale(4, 4, 4);
         RenderUtils.drawBorderedRectHori(matrices, 4, 4, 90, 20, 2, Client.panelColor(), -1);
-        DrawableHelper.drawCenteredString(matrices, fr, "Doug", 45, 8, -1);
-        // fr.draw(matrices, "Doug", 16, 8, -1);
-        // matrices.scale(0.25f, 0.25f, 0.25f);
+        DrawableHelper.drawCenteredString(matrices, fr, "Doug b1", 45, 8, Client.mainColor());
         if (((BoolValue) this.settings.get("ShowFps")).get()) {
             fr.drawWithShadow(matrices, String.format("FPS: %s", mc.fpsDebugString.split(" ")[0]), 1, fr.fontHeight * 5,
-                    0x00ff00);
+                    Client.mainColor());
         }
         // Arraylist
         int lastNameWidth = 0;
@@ -165,14 +150,14 @@ public class Hud extends Utility {
     public Boolean enabled() {
         ArrayList<Utility> utils = new ArrayList<Utility>(DougMod.client.utilities().values());
         MinecraftClient mc = MinecraftClient.getInstance();
-        // TextRenderer fr = mc.textRenderer;
+        TextRenderer fr = mc.textRenderer;
         Collections.sort(utils, new Comparator<Utility>() {
             @Override
             public int compare(Utility arg0, Utility arg1) {
-                // int width = fr.getWidth(arg0.getName());
-                // int otherWidth = fr.getWidth(arg1.getName());
-                int width = arg0.getName().length();
-                int otherWidth = arg1.getName().length();
+                int width = fr.getWidth(arg0.getName());
+                int otherWidth = fr.getWidth(arg1.getName());
+                // int width = arg0.getName().length();
+                // int otherWidth = arg1.getName().length();
                 if (width < otherWidth) {
                     return 1;
                 } else {
@@ -185,8 +170,4 @@ public class Hud extends Utility {
         return super.enabled();
     }
 
-    @Override
-    public HashMap<String, Value> getSettings() {
-        return settings;
-    }
 }

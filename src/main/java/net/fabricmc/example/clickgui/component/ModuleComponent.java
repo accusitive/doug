@@ -17,6 +17,7 @@ public class ModuleComponent extends Component {
     public Utility utility;
     private boolean open = false;
     private int mouseX, mouseY;
+    private boolean listening = false;
 
     CategoryComponent parent;
     public ArrayList<OptionComponent> optionComponents;
@@ -49,17 +50,13 @@ public class ModuleComponent extends Component {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
-        
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if(!this.open) {
-            RenderUtils.drawBorderedRect(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1, hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor(), -1);
-        } else {
-        RenderUtils.drawBorderedLeft(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1,
-                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor(), -1);
 
-        }
-        // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y + this.height(),
-        //         hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
+        MinecraftClient mc = MinecraftClient.getInstance();
+        RenderUtils.drawBorderedRectHori(matrixStack, this.x, this.y, this.x + this.width, this.y + this.height(), 1,
+                hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor(), -1);
+        // DrawableHelper.fill(matrixStack, this.x, this.y, this.x + width, this.y +
+        // this.height(),
+        // hovered(mouseX, mouseY) ? Client.panelSelectedColor() : Client.panelColor());
         mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, utility.getName(), this.x + 4, this.y + 4,
                 utility.enabled() ? Client.mainColor() : -1);
         if (this.optionComponents.size() != 0) {
@@ -86,14 +83,20 @@ public class ModuleComponent extends Component {
                 }
             } else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                 if (action == GLFW.GLFW_PRESS) {
-                    boolean before = this.open;
-                    for (ModuleComponent mc : this.parent.moduleComponents) {
-                        for (OptionComponent oc : mc.optionComponents) {
-                            oc.parent.open = false;
+                    if (this.utility.settings.size() > 0) {
+                        boolean before = this.open;
+                        for (ModuleComponent mc : this.parent.moduleComponents) {
+                            for (OptionComponent oc : mc.optionComponents) {
+                                oc.parent.open = false;
+                            }
                         }
-                    }
 
-                    this.open = !before;
+                        this.open = !before;
+                    }
+                }
+            } else if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+                if (action == GLFW.GLFW_PRESS) {
+                    this.listening = true;
                 }
             }
         }
@@ -101,4 +104,13 @@ public class ModuleComponent extends Component {
             oc.mousePress(button, action);
         }
     }
+
+	public void keyPress(int key) {
+        if(this.listening) {
+            if(key != GLFW.GLFW_KEY_SPACE) {
+                this.utility.bind = key;
+            }
+            this.listening = false;
+        }
+	}
 }
