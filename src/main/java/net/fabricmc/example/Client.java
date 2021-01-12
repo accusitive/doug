@@ -16,6 +16,8 @@ import net.fabricmc.example.utilities.Velocity;
 import net.fabricmc.example.utilities.TriggerBot;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.Packet;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 
 public class Client {
     String name;
@@ -100,8 +102,20 @@ public class Client {
                 cg.mousePress(button, action);
             }
         }
-        
     }
+    public boolean packetSend(Packet<?> packet) {
+        //TODO: Dispatch to modules
+        if(packet instanceof ChatMessageC2SPacket) {
+            ChatMessageC2SPacket chatPacket = (ChatMessageC2SPacket)packet;
+            if(chatPacket.getChatMessage().startsWith(".")) {
+                return true;
+            }
+        }   
+        return false;     
+    }
+    public boolean packetReceive(Packet<?> packet) {
+		return false;
+	}
     public ClickguiScreen getClickguiScreen () {
         return this.clickguiScreen;
     }
@@ -120,4 +134,8 @@ public class Client {
     public static int mainColor() {
         return 0xff00cc66;
     }
+
+	
+
+	
 }

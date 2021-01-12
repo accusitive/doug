@@ -15,7 +15,8 @@
     "Matrix4fMixin",
     "LivingEntityRendererMixin",
     "ClientPlayNetworkHandlerMixin",
-    "ClientPlayerEntityMixin"
+    "ClientPlayerEntityMixin",
+    "ClientConnectionMixin"
 
   ],
   "injectors": {
