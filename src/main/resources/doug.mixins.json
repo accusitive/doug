@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "net.dougteam.doug.client.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
@@ -12,7 +12,6 @@
     "HudRenderMixin",
     "MousePressMixin",
     "MinecraftClientMixin",
-    "Matrix4fMixin",
     "LivingEntityRendererMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientPlayerEntityMixin",

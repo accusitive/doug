@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.DougMod"
+      "net.dougteam.doug.DougMod"
     ]
   },
   "mixins": [
